@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="repository"
+            type="com.example.lab3ui.data.Repository" />
+        <variable
+            name="viewModel"
+            type="com.example.lab3ui.ui.questions.QuestionsViewModel" />
+        <variable
+            name="questionFragment"
+            type="com.example.lab3ui.ui.questions.QuestionsFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.lab3ui.ui.question.QuestionsFragment">
+
+        <Button
+            android:id="@+id/addQuestionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_question_button_text"
+            android:onClick="@{()-> questionFragment.goToCreteQuestionFragment()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/questionsCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:padding="6dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addQuestionButton"
+            app:layout_constraintVertical_bias="1.0"
+            app:listData="@{viewModel.questionList}"
+            tools:itemCount="16"
+            tools:listitem="@layout/question_item" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

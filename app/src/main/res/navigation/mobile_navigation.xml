@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_login">
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.lab3ui.ui.login.LoginFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_nav_login_to_nav_questions"
+            app:destination="@id/nav_questions" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.example.lab3ui.ui.register.RegisterFragment"
+        android:label="@string/menu_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_nav_register_to_nav_login"
+            app:destination="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_questions"
+        android:name="com.example.lab3ui.ui.questions.QuestionsFragment"
+        android:label="@string/menu_questions"
+        tools:layout="@layout/fragment_questions" >
+        <action
+            android:id="@+id/action_nav_questions_to_pollingFragment"
+            app:destination="@id/pollingFragment" />
+        <action
+            android:id="@+id/action_nav_questions_to_createQuestionFragment"
+            app:destination="@id/createQuestionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.lab3ui.ui.account.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_nav_account_to_nav_login"
+            app:destination="@id/nav_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/createQuestionFragment"
+        android:name="com.example.lab3ui.ui.createquestion.CreateQuestionFragment"
+        android:label="Create Question" >
+        <action
+            android:id="@+id/action_createQuestionFragment_to_nav_questions"
+            app:destination="@id/nav_questions" />
+    </fragment>
+    <fragment
+        android:id="@+id/pollingFragment"
+        android:name="com.example.lab3ui.ui.polling.PollingFragment"
+        android:label="Polling" />
+</navigation>
