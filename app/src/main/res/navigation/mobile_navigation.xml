@@ -55,5 +55,9 @@
     <fragment
         android:id="@+id/pollingFragment"
         android:name="com.example.lab3ui.ui.polling.PollingFragment"
-        android:label="Polling" />
+        android:label="Polling" >
+        <action
+            android:id="@+id/action_pollingFragment_to_nav_questions"
+            app:destination="@id/nav_questions" />
+    </fragment>
 </navigation>

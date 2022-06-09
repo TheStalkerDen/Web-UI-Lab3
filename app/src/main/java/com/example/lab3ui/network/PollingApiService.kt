@@ -6,7 +6,9 @@ import com.example.lab3ui.data.models.QuestionRequest
 import com.example.lab3ui.data.models.User
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
@@ -39,7 +41,7 @@ interface PollingApiService {
     suspend fun deleteQuestion(
         @Header("Authorization") token: String,
         @Path("questionId") questionId: Int,
-    )
+    ): Response<Unit>
 
 
     @PATCH("questions/{questionId}/answers/{answerId}/vote")

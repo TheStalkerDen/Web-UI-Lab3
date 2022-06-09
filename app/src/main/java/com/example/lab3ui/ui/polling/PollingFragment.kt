@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.lab3ui.R
 import com.example.lab3ui.data.Repository
 import com.example.lab3ui.databinding.FragmentCreateQuestionBinding
@@ -40,13 +41,6 @@ class PollingFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             viewModel = pollingViewModel
         }
-
-        if(pollingViewModel.canDeleteQuestion()){
-            binding!!.deleteQuestionButton.visibility = View.VISIBLE
-        }else{
-            binding!!.deleteQuestionButton.visibility = View.GONE
-        }
-
     }
 
     fun vote(){
@@ -54,5 +48,10 @@ class PollingFragment : Fragment() {
         Toast.makeText(context,"Thank you for your vote!",Toast.LENGTH_SHORT).show()
         binding!!.voteButton.visibility=View.GONE
         pollingViewModel.vote()
+    }
+
+    fun deleteQuestion(){
+        pollingViewModel.deleteQuestion()
+        findNavController().navigate(R.id.action_pollingFragment_to_nav_questions)
     }
 }

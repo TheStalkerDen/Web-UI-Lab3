@@ -18,6 +18,8 @@ class PollingViewModel : ViewModel() {
     val question: LiveData<Question> = _question
     private val _canVote = MutableLiveData<Boolean>()
     val canVote: LiveData<Boolean> = _canVote
+    private val _canDeleteQuestion = MutableLiveData<Boolean>()
+    var canDeleteQuestion: LiveData<Boolean>  = _canDeleteQuestion
 
     var selectedAnswerPosition: Int = -1
 
@@ -27,7 +29,6 @@ class PollingViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             _question.value = PollingApi.retrofitService.getQuestion(Repository.currentQuestionId)
-            _answerList.value = question.value?.answers
             if(Repository.currentUser != null) {
                 val response = PollingApi.retrofitService.isAlreadyVote(
                     token = Repository.getAccessTokenForHeader(),
@@ -37,10 +38,12 @@ class PollingViewModel : ViewModel() {
             }else{
                 _canVote.value = false
             }
+            _answerList.value = question.value?.answers
+            _canDeleteQuestion.value = calcCanDeleteQuestion()
         }
     }
 
-    fun canDeleteQuestion():Boolean {
+    private fun calcCanDeleteQuestion():Boolean {
         val currentUser = Repository.currentUser ?: return false
         return currentUser.username == "admin" || question.value!!.authorUsername == currentUser.username
     }
@@ -50,7 +53,7 @@ class PollingViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = PollingApi.retrofitService.vote(
-                    token = "Bearer ${Repository.accessToken}",
+                    token = Repository.getAccessTokenForHeader(),
                     questionId = _question.value!!.id,
                     answerId = _answerList.value!![selectedAnswerPosition].id
                 )
@@ -58,6 +61,15 @@ class PollingViewModel : ViewModel() {
             }catch (error: Exception){
                 Log.d(TAG,error.toString())
             }
+        }
+    }
+
+    fun deleteQuestion(){
+        viewModelScope.launch {
+            PollingApi.retrofitService.deleteQuestion(
+                token = Repository.getAccessTokenForHeader(),
+                questionId = _question.value!!.id
+            )
         }
     }
 
